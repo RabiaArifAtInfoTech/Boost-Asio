@@ -11,15 +11,15 @@ using std::endl;
 
 string readMsg(tcp::socket& socket)
 {
-	char data[100];
-	size_t len = socket.read_some(boost::asio::buffer(data, 100));
+	char data[1000];
+	size_t len = socket.read_some(boost::asio::buffer(data, 1000));
 	string data1 = std::string(data, len);
 	return data1;
 }
 
 void writeMsg(tcp::socket& socket, const string& message)
 {
-	const string msg = message + "\n";
+	const string msg = message;
 	boost::asio::write(socket, boost::asio::buffer(message));
 }
 
@@ -32,19 +32,32 @@ int main()
 	socket.connect(tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 3000));
 	boost::system::error_code error;
 
-	string msg = "test message from client side";
+	string msg = "0";
 
-	writeMsg(socket, msg);
+	do
+	{
+		cout << "\nClient: ";
+		std::getline(std::cin, msg, '\n');
+		//		std::cin >> msg;
+		writeMsg(socket, msg);
+
+		string message = readMsg(socket);
+		cout << "\nServer Msg: " << message << endl;
+
+
+	}
+	while(msg != "null");
+
+	cout << "Chat Finished";
+
+
+
+	
+
 	
 	getchar();
 	
-	string message = readMsg(socket);
-	cout << "msg from server : " << message << endl;
-
-
-	getchar();
-
-	std::cout << "\n\n\n";
+	cout << "\n\n\n";
 	return 0;
-}
 
+}
