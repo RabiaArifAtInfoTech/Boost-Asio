@@ -19,7 +19,6 @@ string readMsg(tcp::socket& socket)
 
 void writeMsg(tcp::socket& socket, const string& message)
 {
-	const string msg = message;
 	boost::asio::write(socket, boost::asio::buffer(message));
 }
 
@@ -35,9 +34,7 @@ int main()
 	//read operation
 
 	
-//	string msg = "test message from server side";
-
-	string msg ="0";
+	string msg = "0";
 
 	do
 	{
@@ -49,14 +46,12 @@ int main()
 
 		writeMsg(socket, msg);
 
-	}
-	while (msg != "null");
+	} while (msg != "null");
 
+	//socket.close();	
 	cout << "Chat Finished";
 
-	/*cout << "\nPress any key to send msg to client : ";
-	getchar();*/
-
+	
 	getchar();
 
 	cout << "\n\n\n";
