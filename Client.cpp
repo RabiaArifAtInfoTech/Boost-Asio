@@ -19,9 +19,8 @@ string readMsg(tcp::socket& socket)
 
 void writeMsg(tcp::socket& socket, const string& message)
 {
-	const string msg = message;
 	boost::asio::write(socket, boost::asio::buffer(message));
-}
+} 
 
 int main()
 {
@@ -33,26 +32,24 @@ int main()
 	boost::system::error_code error;
 
 	string msg = "0";
+	string message = "0";
 
 	do
 	{
 		cout << "\nClient: ";
 		std::getline(std::cin, msg, '\n');
-		//		std::cin >> msg;
+
 		writeMsg(socket, msg);
 
-		string message = readMsg(socket);
+		message = readMsg(socket);
 		cout << "\nServer Msg: " << message << endl;
 
 
-	}
-	while(msg != "null");
+	} while(message!="null");
 
 	cout << "Chat Finished";
 
 
-
-	
 
 	
 	getchar();
